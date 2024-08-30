@@ -16,7 +16,7 @@ export class HomeService {
 
     async addHome(home: Home): Promise<Home | null> {
         home.id = "";
-        home.tasks = [] as Task[];
+        home.tasks = [] as string[];
         return await this.homeRepository.create(home);
     }
 

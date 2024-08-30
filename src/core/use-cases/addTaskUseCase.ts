@@ -45,12 +45,12 @@ export class AddTaskUseCase {
 
                     switch (createdTask.taskType) {
                         case "personal":
-                            user!.personalTasks.push(createdTask);
+                            user!.personalTasks.push(createdTask.id);
                             await this.userService.updateUser(user!);
                             break;
 
                         case "professional":
-                            user!.professionalTasks.push(createdTask);
+                            user!.professionalTasks.push(createdTask.id);
                             await this.userService.updateUser(user!);
                             break;
 
