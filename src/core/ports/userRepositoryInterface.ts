@@ -1,4 +1,3 @@
-// src/core/ports/userRepositoryInterface.ts
 import { BasicRepository } from "./basicRepositoryInterface";
 import { User } from "../entities/user";
 
