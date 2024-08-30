@@ -1,6 +1,8 @@
-import React from "react";
+// src/components/tasks/TaskList.tsx
+import React, { useState } from "react";
 import { Task } from "../../core/entities/task";
-import { Card, CardContent, Typography } from "@mui/material"; 
+import { Typography } from "@mui/material";
+import TaskCard from "./taskCard";
 
 interface TaskListProps {
     tasks: Task[];
@@ -8,36 +10,32 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
+    const [taskList, setTaskList] = useState<Task[]>(tasks);
+
+    const handleTaskUpdated = (updatedTask: Task) => {
+        setTaskList((prevTasks) =>
+            prevTasks.map((task) =>
+                task.id === updatedTask.id ? updatedTask : task
+            )
+        );
+    };
+
     return (
         <div>
             <Typography variant="h6" gutterBottom>
                 {title}
             </Typography>
-            {tasks.length === 0 ? (
+            {taskList.length === 0 ? (
                 <Typography variant="body1">
                     No hay tareas disponibles.
                 </Typography>
             ) : (
-                tasks.map((task) => (
-                    <Card key={task.id} style={{ marginBottom: "16px" }}>
-                        <CardContent>
-                            <Typography variant="h6">{task.title}</Typography>
-                            {task.description && (
-                                <Typography variant="body2">
-                                    {task.description}
-                                </Typography>
-                            )}
-                            {task.dueDate && (
-                                <Typography variant="body2">
-                                    Fecha de vencimiento:{" "}
-                                    {task.dueDate.toDate().toLocaleDateString()}
-                                </Typography>
-                            )}
-                            <Typography variant="body2">
-                                Estado: {task.status}
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                taskList.map((task) => (
+                    <TaskCard
+                        key={task.id}
+                        task={task}
+                        onTaskUpdated={handleTaskUpdated}
+                    />
                 ))
             )}
         </div>
