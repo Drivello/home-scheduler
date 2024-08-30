@@ -36,8 +36,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
                     name: userCredential.user.displayName ?? "",
                     email: userCredential.user.email ?? "",
                     homeId: "",
-                    personalTasks: [] as Task[],
-                    professionalTasks: [] as Task[],
+                    personalTasks: [],
+                    professionalTasks: [],
                 });
 
                 localStorage.setItem("authToken", userCredential.user.uid);
@@ -71,8 +71,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
                 name: result.user.displayName ?? "",
                 email: result.user.email ?? "",
                 homeId: "",
-                personalTasks: [] as Task[],
-                professionalTasks: [] as Task[],
+                personalTasks: [],
+                professionalTasks: [],
             });
 
             localStorage.setItem("authToken", result.user.uid);

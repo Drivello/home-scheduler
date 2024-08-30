@@ -64,7 +64,7 @@ export class AddTaskUseCase {
                             const home = await this.homeService.getHomeById(
                                 user.homeId
                             );
-                            home!.tasks.push(createdTask);
+                            home!.tasks.push(createdTask.id);
                             await this.homeService.updateHome(home!);
                             break;
 
