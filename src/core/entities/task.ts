@@ -5,7 +5,7 @@ export interface Task {
     id: string;
     title: string;
     description?: string;
-    dueDate?: Timestamp | null;
+    dueDate?: Timestamp | undefined;
     taskType: "personal" | "professional" | "home";
     assignedTo?: Omit<User, "personalTasks" | "professionalTasks" | "homeId">[];
     homeId?: string;

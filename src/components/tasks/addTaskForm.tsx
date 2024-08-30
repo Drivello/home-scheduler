@@ -37,15 +37,15 @@ const AddTaskForm: React.FC = () => {
 
         const newTask: Task = {
             id: "",
-            title,
-            description,
-            dueDate: dueDate ? Timestamp.fromDate(new Date(dueDate)) : null,
+            title: title ?? "",
+            description: description ?? "",
+            dueDate: dueDate ? Timestamp.fromDate(new Date(dueDate)) : undefined,
             taskType,
             assignedTo: [{ id: user.id, name: user.name, email: user.email }],
-            homeId: user.homeId,
+            homeId: user.homeId ?? "",
             status: "pending",
             createdBy: { id: user.id, name: user.name, email: user.email },
-            recurrence,
+            recurrence: recurrence ?? "unique",
         };
 
         try {

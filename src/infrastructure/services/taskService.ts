@@ -14,27 +14,43 @@ export class TaskService {
     }
 
     async addTask(task: Task): Promise<Task | null> {
-        const taskData = {
+        let taskData = {
             ...task,
-            dueDate: task.dueDate
-                ? Timestamp.fromDate(task.dueDate.toDate())
-                : null,
+            dueDate: task.dueDate,
             assignedTo: task.assignedTo,
             createdBy: {
                 id: task.createdBy.id,
                 name: task.createdBy.name,
                 email: task.createdBy.email,
             },
-            recurrence: task.recurrence ?? "unique",
+            recurrence: task.recurrence,
         };
+        if (taskData.dueDate === undefined) delete taskData.dueDate
         return await this.taskRepository.create(taskData);
     }
 
-    async updateTask(user: Task): Promise<void> {
-        await this.taskRepository.update(user);
+    async updateTask(task: Task): Promise<void> {
+        await this.taskRepository.update(task);
     }
 
     async deleteTask(id: string): Promise<void> {
         await this.taskRepository.delete(id);
+    }
+
+    async getMultipleTasks(tasks: string[]): Promise<Task[]> {
+        const taskPromises = [];
+        try {
+            for (const taskId of tasks) {
+                const taskPromise = this.getTaskById(taskId);
+                taskPromises.push(taskPromise);
+            }
+            const results = await Promise.all(taskPromises);
+            return results.filter(
+                (result) => result !== null && result !== undefined
+            );
+        } catch (error) {
+            console.error("error obtaining tasks: ", error);
+            return [];
+        }
     }
 }
