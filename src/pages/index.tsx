@@ -1,68 +1,63 @@
+import TaskList from "@/components/tasks/taskList";
+import { Task } from "@/core/entities/task";
+import { homeService } from "@/infrastructure/services/services";
+import { RootState } from "@/lib/reduxStore";
 import React, { useEffect } from "react";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../lib/reduxStore";
-import { setUser, clearUser } from "../lib/reduxStore";
-import AuthForm from "../components/users/authForm";
-import { UserService } from "../infrastructure/services/userService";
-import { UserRepository } from "../infrastructure/repositories/userRepository";
-import Profile from "@/components/users/profile";
-import AddTaskForm from "@/components/tasks/addTaskForm";
-
-const userRepository = new UserRepository();
-const userService = new UserService(userRepository);
+import { useSelector } from "react-redux";
 
 const HomePage: React.FC = () => {
-    const dispatch = useDispatch();
     const currentUser = useSelector((state: RootState) => state.user.user);
+    const [homeTasks, setHomeTasks] = React.useState([] as Task[]);
     const [loading, setLoading] = React.useState(true);
 
     useEffect(() => {
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                try {
-                    const userData = user.email
-                        ? await userService.getUserByEmail(user.email)
-                        : undefined;
-                    if (userData) {
-                        dispatch(setUser(userData));
-                    }
-                } catch (error) {
-                    console.error("Error fetching user data:", error);
+        const fetchHomeTasks = async () => {
+            try {
+                if (currentUser?.homeId) {
+                    const homeData = await homeService.getHomeById(
+                        currentUser.homeId
+                    );
+                    homeData
+                        ? setHomeTasks(homeData.tasks)
+                        : setHomeTasks([] as Task[]);
                 }
-            } else {
-                dispatch(clearUser());
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
             }
+        };
+        if (currentUser) {
             setLoading(false);
-        });
-
-        return () => unsubscribe();
-    }, [dispatch]);
-
-    const handleLogout = async () => {
-        const auth = getAuth();
-        try {
-            await signOut(auth);
-            dispatch(clearUser());
-        } catch (error) {
-            console.error("Error signing out:", error);
         }
-    };
+        fetchHomeTasks();
+    }, [currentUser]);
 
-    if (loading) {
-        return <div>Loading...</div>;
+    if (!currentUser) {
+        setLoading(true);
     }
 
     return (
         <div>
-            {!currentUser ? (
-                <AuthForm onAuthSuccess={() => window.location.reload()} />
+            {loading ? (
+                <div>Loading user data...</div>
             ) : (
                 <div>
-                    <button onClick={handleLogout}>Logout</button>
-                    <Profile />
-                    {/*<AddTaskForm />*/}
+                    <h1>Hola, {currentUser!.name}!</h1>
+
+                    <TaskList
+                        tasks={currentUser!.personalTasks}
+                        title="Tareas Personales"
+                    />
+                    <TaskList
+                        tasks={currentUser!.professionalTasks}
+                        title="Tareas Profesionales"
+                    />
+                    {currentUser!.homeId ? (
+                        <TaskList tasks={homeTasks} title="Tareas de Hogar" />
+                    ) : (
+                        <div>No Home</div>
+                    )}
                 </div>
             )}
         </div>
