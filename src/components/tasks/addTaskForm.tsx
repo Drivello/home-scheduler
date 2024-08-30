@@ -50,6 +50,7 @@ const AddTaskForm: React.FC = () => {
 
         try {
             await addTaskUseCase.execute(newTask);
+            //TODO: add alert if task is created successfully
         } catch (error) {
             console.error("Error adding task:", error);
         } finally {

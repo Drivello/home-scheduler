@@ -1,9 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/reduxStore";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser, RootState } from "@/lib/reduxStore";
 import Link from "next/link";
+import { getAuth, signOut } from "firebase/auth";
 
 const Profile: React.FC = () => {
+    const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
 
     const handleCopyHomeId = () => {
@@ -16,6 +18,16 @@ const Profile: React.FC = () => {
                     console.error("Error al copiar el Home ID: ", err);
                 }
             );
+        }
+    };
+
+    const handleLogout = async () => {
+        const auth = getAuth();
+        try {
+            await signOut(auth);
+            dispatch(clearUser());
+        } catch (error) {
+            console.error("Error signing out:", error);
         }
     };
 
@@ -58,6 +70,7 @@ const Profile: React.FC = () => {
                     </p>
                 </div>
             )}
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 };
