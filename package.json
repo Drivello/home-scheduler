@@ -3,22 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev:watch": "nodemon -w pages -w components -e js,jsx,ts,tsx --exec \"next dev\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@firebase/firestore": "^4.7.0",
+    "@mui/icons-material": "^6.0.0",
+    "@mui/material": "^6.0.0",
+    "@reduxjs/toolkit": "^2.2.7",
+    "axios": "^1.7.5",
+    "firebase": "^10.13.0",
+    "firebase-admin": "^12.4.0",
+    "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.6"
+    "react-query": "^3.39.3",
+    "react-redux": "^9.1.2",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/node": "^20.16.1",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.6"
+    "eslint-config-next": "14.2.6",
+    "nodemon": "^3.1.4",
+    "typescript": "^5.5.4"
   }
 }
