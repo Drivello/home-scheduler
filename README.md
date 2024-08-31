@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+¡Entendido! Aquí tienes una versión mejorada del README para tu proyecto:
 
-## Getting Started
+---
 
-First, run the development server:
+# Home Scheduler
+
+**Home Scheduler** es una aplicación para la gestión de tareas del hogar, diseñada para ayudarte a organizar y planificar tus tareas personales, profesionales y del hogar de manera eficiente.
+
+## Configuración Inicial
+
+Para empezar a utilizar esta aplicación, sigue estos pasos:
+
+### 1. Clona el Repositorio
+
+Clona este repositorio en tu máquina local utilizando el siguiente comando:
+
+```bash
+git clone https://github.com/tu-usuario/home-scheduler.git
+```
+
+### 2. Instala las Dependencias
+
+Navega al directorio del proyecto y ejecuta el siguiente comando para instalar las dependencias necesarias:
+
+```bash
+cd home-scheduler
+npm install
+```
+
+### 3. Configuración de Variables de Entorno
+
+Debes configurar las variables de entorno para conectarte con Firebase. Crea un archivo `.env.local` en la raíz del proyecto y agrega las siguientes configuraciones:
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=<TU_API_KEY>
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=<TU_AUTH_DOMAIN>
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=<TU_PROJECT_ID>
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=<TU_STORAGE_BUCKET>
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=<TU_MESSAGING_SENDER_ID>
+NEXT_PUBLIC_FIREBASE_APP_ID=<TU_APP_ID>
+```
+
+**Nota:** Asegúrate de reemplazar los valores con tus credenciales de Firebase. Puedes obtener esta información desde el [Firebase Console](https://console.firebase.google.com/).
+
+### 4. Inicia la Aplicación
+
+Una vez configuradas las variables de entorno y instaladas las dependencias, puedes iniciar la aplicación en modo de desarrollo utilizando el siguiente comando:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Esto abrirá la aplicación en tu navegador en [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Compilación para Producción
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Para preparar la aplicación para producción, utiliza el comando:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Esto generará una versión optimizada de tu aplicación en la carpeta `out`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tecnologías Utilizadas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **React**: Biblioteca de JavaScript para construir interfaces de usuario.
+- **Next.js**: Framework de React para aplicaciones web de lado del servidor.
+- **Firebase**: Plataforma para aplicaciones web y móviles que ofrece servicios de backend como autenticación, base de datos en tiempo real y almacenamiento.
+- **Redux**: Librería para la gestión del estado de la aplicación.
+- **Material-UI**: Librería de componentes de interfaz de usuario basados en Material Design para React.
 
-## Deploy on Vercel
+## Funcionalidades Principales
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Gestión de Tareas**: Añadir, editar, y eliminar tareas personales, profesionales y del hogar.
+- **Autenticación**: Sistema de autenticación de usuarios utilizando Firebase Auth.
+- **Recurrencia de Tareas**: Configuración de tareas recurrentes (diarias, semanales, mensuales).
+- **Vista Personalizada**: Visualización de tareas en vistas diarias, semanales y mensuales.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contribución
+
+¡Las contribuciones son bienvenidas! Si tienes alguna sugerencia, corrección o mejora, no dudes en abrir un issue o enviar un pull request.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más detalles.
