@@ -9,6 +9,16 @@ import {
     taskService,
     userService,
 } from "@/infrastructure/services/services";
+import {
+    TextField,
+    Button,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
+    Grid,
+    Box,
+} from "@mui/material";
 
 const addTaskUseCase = new AddTaskUseCase({
     taskService,
@@ -39,7 +49,9 @@ const AddTaskForm: React.FC = () => {
             id: "",
             title: title ?? "",
             description: description ?? "",
-            dueDate: dueDate ? Timestamp.fromDate(new Date(dueDate)) : undefined,
+            dueDate: dueDate
+                ? Timestamp.fromDate(new Date(dueDate))
+                : undefined,
             taskType,
             assignedTo: [{ id: user.id, name: user.name, email: user.email }],
             homeId: user.homeId ?? "",
@@ -50,7 +62,6 @@ const AddTaskForm: React.FC = () => {
 
         try {
             await addTaskUseCase.execute(newTask);
-            //TODO: add alert if task is created successfully
         } catch (error) {
             console.error("Error adding task:", error);
         } finally {
@@ -67,73 +78,96 @@ const AddTaskForm: React.FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Title:</label>
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Description:</label>
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
-            <div>
-                <label>Due Date:</label>
-                <input
-                    type="date"
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
-                />
-            </div>
-            <div>
-                <label>Task Type:</label>
-                <select
-                    value={taskType}
-                    onChange={(e) =>
-                        setTaskType(
-                            e.target.value as
-                                | "personal"
-                                | "professional"
-                                | "home"
-                        )
-                    }
-                >
-                    <option value="personal">Personal</option>
-                    <option value="professional">Professional</option>
-                    <option value="home">Home</option>
-                </select>
-            </div>
-            <div>
-                <label>Recurrence:</label>
-                <select
-                    value={recurrence}
-                    onChange={(e) =>
-                        setRecurrence(
-                            e.target.value as
-                                | "daily"
-                                | "weekly"
-                                | "monthly"
-                                | "unique"
-                        )
-                    }
-                >
-                    <option value="unique">None</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                </select>
-            </div>
-            <button type="submit" disabled={loading}>
-                {loading ? "Adding..." : "Add Task"}
-            </button>
-        </form>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        label="Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        label="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        multiline
+                        rows={3}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        label="Due Date"
+                        type="date"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <FormControl fullWidth>
+                        <InputLabel>Task Type</InputLabel>
+                        <Select
+                            value={taskType}
+                            onChange={(e) =>
+                                setTaskType(
+                                    e.target.value as
+                                        | "personal"
+                                        | "professional"
+                                        | "home"
+                                )
+                            }
+                        >
+                            <MenuItem value="personal">Personal</MenuItem>
+                            <MenuItem value="professional">
+                                Professional
+                            </MenuItem>
+                            <MenuItem value="home">Home</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                    <FormControl fullWidth>
+                        <InputLabel>Recurrence</InputLabel>
+                        <Select
+                            value={recurrence}
+                            onChange={(e) =>
+                                setRecurrence(
+                                    e.target.value as
+                                        | "daily"
+                                        | "weekly"
+                                        | "monthly"
+                                        | "unique"
+                                )
+                            }
+                        >
+                            <MenuItem value="unique">None</MenuItem>
+                            <MenuItem value="daily">Daily</MenuItem>
+                            <MenuItem value="weekly">Weekly</MenuItem>
+                            <MenuItem value="monthly">Monthly</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        disabled={loading}
+                    >
+                        {loading ? "Adding..." : "Add Task"}
+                    </Button>
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
