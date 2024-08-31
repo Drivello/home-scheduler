@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUser, RootState } from "@/lib/reduxStore";
 import Link from "next/link";
 import { getAuth, signOut } from "firebase/auth";
+import leaveHomeUseCase from "@/core/use-cases/leaveHomeUseCase";
 
 const Profile: React.FC = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const Profile: React.FC = () => {
                 }
             );
         }
+    };
+
+    const handleLeaveHome = async () => {
+        await leaveHomeUseCase.execute({ user: user! });
     };
 
     const handleLogout = async () => {
@@ -59,18 +64,24 @@ const Profile: React.FC = () => {
                 </>
             ) : (
                 <div>
-                    <p>
-                        <strong>HomeID:</strong> {user.homeId}
+                    <strong>HomeID:</strong> {user.homeId}
+                    <div style={{ marginTop: "10px" }}>
                         <button
                             onClick={handleCopyHomeId}
                             style={{ marginLeft: "10px" }}
                         >
-                            Copiar
+                            Copy ID
                         </button>
-                    </p>
+                        <button
+                            onClick={handleLeaveHome}
+                            
+                        >
+                            Leave Home
+                        </button>
+                    </div>
                 </div>
             )}
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout} style={{ marginTop: "20px" }}>Logout</button>
         </div>
     );
 };
