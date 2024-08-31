@@ -54,9 +54,7 @@ export class HomeRepository implements BasicRepository<Home> {
                     id: docSnap.id,
                     name: data.name,
                     members: data.members,
-                    tasks: data.tasks.map(
-                        (taskId: string) => ({ id: taskId } as Task)
-                    ),
+                    tasks: data.tasks,
                 };
                 return home;
             } else {
@@ -88,7 +86,7 @@ export class HomeRepository implements BasicRepository<Home> {
             const updatedData = {
                 name: home.name,
                 members: home.members,
-                tasks: home.tasks.map((task) => task.id),
+                tasks: home.tasks,
             };
 
             await updateDoc(docRef, updatedData);
