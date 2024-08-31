@@ -25,7 +25,7 @@ export class TaskService {
             },
             recurrence: task.recurrence,
         };
-        if (taskData.dueDate === undefined) delete taskData.dueDate
+        if (taskData.dueDate === undefined) delete taskData.dueDate;
         return await this.taskRepository.create(taskData);
     }
 
