@@ -18,16 +18,14 @@ const HomePage: React.FC = () => {
                 setLoading(false);
                 return;
             }
-
             setLoading(true);
-
             try {
                 const taskPromises: Promise<void>[] = [];
-
                 if (currentUser.homeId) {
                     const homeData = await homeService.getHomeById(
                         currentUser.homeId
                     );
+
                     if (homeData && homeData.tasks.length > 0) {
                         taskPromises.push(
                             (async () => {
@@ -35,6 +33,7 @@ const HomePage: React.FC = () => {
                                     await taskService.getMultipleTasks(
                                         homeData.tasks
                                     );
+
                                 setHomeTasks(tasks);
                             })()
                         );
@@ -42,7 +41,6 @@ const HomePage: React.FC = () => {
                         setHomeTasks([]);
                     }
                 }
-
                 if (
                     currentUser.personalTasks &&
                     currentUser.personalTasks.length > 0
@@ -58,7 +56,6 @@ const HomePage: React.FC = () => {
                 } else {
                     setPersonalTasks([]);
                 }
-
                 if (
                     currentUser.professionalTasks &&
                     currentUser.professionalTasks.length > 0
@@ -74,7 +71,6 @@ const HomePage: React.FC = () => {
                 } else {
                     setProfessionalTasks([]);
                 }
-
                 await Promise.all(taskPromises);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
@@ -85,6 +81,8 @@ const HomePage: React.FC = () => {
 
         fetchTasks();
     }, [currentUser]);
+
+    useEffect(() => {}, [loading]);
 
     if (loading) {
         return <div>Loading user data...</div>;
