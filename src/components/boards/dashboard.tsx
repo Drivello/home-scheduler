@@ -84,6 +84,8 @@ const Dashboard: React.FC = () => {
 
     useEffect(() => {}, [loading]);
 
+    useEffect(() => {},[]);
+
     if (loading) {
         return <div>Loading user data...</div>;
     }
