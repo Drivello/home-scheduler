@@ -3,6 +3,7 @@ import { Task } from "@/core/entities/task";
 import { TaskService } from "@/infrastructure/services/taskService";
 import { UserService } from "@/infrastructure/services/userService";
 import { HomeService } from "@/infrastructure/services/homeService";
+import { homeService, taskService, userService } from "@/infrastructure/services/services";
 
 interface AddTaskUseCaseProps {
     taskService: TaskService;
@@ -10,7 +11,7 @@ interface AddTaskUseCaseProps {
     homeService: HomeService;
 }
 
-export class AddTaskUseCase {
+class AddTaskUseCase {
     private taskService: TaskService;
     private userService: UserService;
     private homeService: HomeService;
@@ -79,3 +80,11 @@ export class AddTaskUseCase {
         }
     }
 }
+
+const addTaskUseCase = new AddTaskUseCase({
+    taskService,
+    userService,
+    homeService,
+});
+
+export default addTaskUseCase;
