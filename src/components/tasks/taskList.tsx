@@ -20,6 +20,12 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
         );
     };
 
+    const onTaskDeleted = (taskDeletedId: string) => {
+        setTaskList((taskList) =>
+            taskList.filter((task) => task.id !== taskDeletedId)
+        );
+    };
+
     return (
         <div>
             <Typography variant="h6" gutterBottom>
@@ -35,6 +41,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
                         key={task.id}
                         task={task}
                         onTaskUpdated={handleTaskUpdated}
+                        onTaskDeleted={onTaskDeleted}
                     />
                 ))
             )}
