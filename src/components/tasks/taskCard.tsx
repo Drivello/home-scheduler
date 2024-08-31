@@ -1,5 +1,6 @@
+// src/components/tasks/TaskCard.tsx
 import React, { useState } from "react";
-import { Task } from "../../core/entities/task";
+import { Task, taskStatus } from "../../core/entities/task";
 import {
     Card,
     CardContent,
@@ -10,10 +11,13 @@ import {
     Box,
     IconButton,
     Collapse,
+    Modal,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { TaskService } from "../../infrastructure/services/taskService";
 import { TaskRepository } from "../../infrastructure/repositories/taskRepository";
+import TaskForm from "./taskForm";
 
 interface TaskCardProps {
     task: Task;
@@ -31,6 +35,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
 }) => {
     const [completed, setCompleted] = useState(task.status === "completed");
     const [expanded, setExpanded] = useState(false);
+    const [editMode, setEditMode] = useState(false);
 
     const handleCheckboxChange = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -40,13 +45,13 @@ const TaskCard: React.FC<TaskCardProps> = ({
         try {
             const updatedTask: Task = {
                 ...task,
-                status: isChecked ? "completed" : "pending",
+                status: isChecked ? taskStatus.completed : taskStatus.completed,
             };
             await taskService.updateTask(updatedTask);
             onTaskUpdated(updatedTask);
         } catch (error) {
             console.error("Error updating task status:", error);
-            setCompleted(task.status === "completed");
+            setCompleted(task.status === taskStatus.completed);
         }
     };
 
@@ -66,6 +71,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+    };
+
+    const handleEditClick = () => {
+        setEditMode(true);
+    };
+
+    const handleCloseEditModal = () => {
+        setEditMode(false);
     };
 
     return (
@@ -91,9 +104,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
                         <Typography variant="h6">{task.title}</Typography>
                     </Box>
 
-                    <IconButton onClick={handleDeleteClick} color="error">
-                        <DeleteIcon />
-                    </IconButton>
+                    <Box>
+                        <IconButton onClick={handleEditClick} color="primary">
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={handleDeleteClick} color="error">
+                            <DeleteIcon />
+                        </IconButton>
+                    </Box>
                 </Box>
 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -110,6 +128,22 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     )}
                 </Collapse>
             </CardContent>
+
+            <Modal open={editMode} onClose={handleCloseEditModal}>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        bgcolor: "background.paper",
+                        boxShadow: 24,
+                        p: 4,
+                    }}
+                >
+                    <TaskForm task={task} submitMode="update" />
+                </Box>
+            </Modal>
         </Card>
     );
 };
