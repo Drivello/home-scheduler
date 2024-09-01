@@ -34,4 +34,11 @@ export class HomeService {
         if (home === null) throw new Error("Home not found");
         return home !== null ? home.members : new Array<string>();
     }
+
+    async deleteHomeTask(homeId: string, taskId: string): Promise<void> {
+        let home = await this.getHomeById(homeId);
+        if (home === null) throw new Error("Home not found");
+        home.tasks = home.tasks.filter((task) => task !== taskId);
+        await this.updateHome(home);
+    }
 }
