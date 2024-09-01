@@ -49,19 +49,6 @@ export class EditTaskUseCase {
                         "[EditTask UseCase]: Cannot change to home task without a home id"
                     );
 
-                if (
-                    originalTask.taskType === taskTypeEnum.home &&
-                    updatedTask.taskType !== taskTypeEnum.home
-                ) {
-                    updatedTask.assignedTo = [
-                        {
-                            id: user.id,
-                            name: user.name,
-                            email: user.email,
-                        },
-                    ];
-                }
-
                 await this.taskService.updateTask(updatedTask);
 
                 if (originalTask.taskType !== updatedTask.taskType) {
@@ -111,9 +98,9 @@ export class EditTaskUseCase {
     }
 
     private async addTaskToAssignments(updatedTask: Task) {
-        console.log("Data to be sent", updatedTask);
+        
         let updatedUser = await this.userService.getUserById(
-            updatedTask.assignedTo![0].id
+            updatedTask.createdBy.id
         );
         if (!updatedUser) throw new Error("Cannot reassing without a user");
 

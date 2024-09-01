@@ -28,7 +28,6 @@ export interface Task {
         | taskTypeEnum.personal
         | taskTypeEnum.professional
         | taskTypeEnum.home;
-    assignedTo?: Omit<User, "personalTasks" | "professionalTasks" | "homeId">[];
     homeId?: string;
     status: taskStatus.pending | taskStatus.completed;
     createdBy: Omit<User, "personalTasks" | "professionalTasks" | "homeId">;

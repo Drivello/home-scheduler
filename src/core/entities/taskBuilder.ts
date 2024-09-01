@@ -8,10 +8,7 @@ export class TaskBuilder {
     private description?: string;
     private dueDate?: Timestamp | undefined;
     private taskType: taskTypeEnum = taskTypeEnum.personal;
-    private assignedTo: Omit<
-        User,
-        "personalTasks" | "professionalTasks" | "homeId"
-    >[] = [];
+
     private homeId?: string;
     private status: taskStatus = taskStatus.pending;
     private createdBy: Omit<
@@ -51,15 +48,7 @@ export class TaskBuilder {
         return this;
     }
 
-    setAssignedTo(
-        assignedTo: Omit<
-            User,
-            "personalTasks" | "professionalTasks" | "homeId"
-        >[]
-    ): TaskBuilder {
-        this.assignedTo = assignedTo;
-        return this;
-    }
+
 
     setHomeId(homeId: string): TaskBuilder {
         this.homeId = homeId;
@@ -83,7 +72,7 @@ export class TaskBuilder {
             description: this.description,
             dueDate: this.dueDate,
             taskType: this.taskType,
-            assignedTo: this.assignedTo,
+
             homeId: this.homeId,
             status: this.status,
             createdBy: this.createdBy,

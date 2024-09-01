@@ -30,9 +30,7 @@ export class TaskRepository implements BasicRepository<Task> {
                     description: data.description,
                     dueDate: data.dueDate as Timestamp,
                     taskType: data.taskType,
-                    assignedTo: data.assignedTo.map(
-                        (userId: string) => ({ id: userId } as User)
-                    ),
+
                     homeId: data.homeId,
                     status: data.status,
                     createdBy: data.createdBy,

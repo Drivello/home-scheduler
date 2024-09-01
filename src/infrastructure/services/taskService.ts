@@ -17,7 +17,7 @@ export class TaskService {
         let taskData = {
             ...task,
             dueDate: task.dueDate,
-            assignedTo: task.assignedTo,
+
             createdBy: {
                 id: task.createdBy.id,
                 name: task.createdBy.name,

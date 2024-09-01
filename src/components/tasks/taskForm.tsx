@@ -68,10 +68,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, submitMode, onSuccess }) => {
                 ? Timestamp.fromDate(new Date(dueDate))
                 : undefined,
             taskType,
-            assignedTo:
-                Array.isArray(task.assignedTo) && task.assignedTo?.length > 0
-                    ? task.assignedTo
-                    : [{ id: user?.id, name: user?.name, email: user?.email }],
+
             homeId: user.homeId ?? "",
             status,
             createdBy: task.createdBy ?? {
