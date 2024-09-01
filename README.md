@@ -1,7 +1,3 @@
-¡Entendido! Aquí tienes una versión mejorada del README para tu proyecto:
-
----
-
 # Home Scheduler
 
 **Home Scheduler** es una aplicación para la gestión de tareas del hogar, diseñada para ayudarte a organizar y planificar tus tareas personales, profesionales y del hogar de manera eficiente.
@@ -64,18 +60,18 @@ Esto generará una versión optimizada de tu aplicación en la carpeta `out`.
 
 ## Tecnologías Utilizadas
 
-- **React**: Biblioteca de JavaScript para construir interfaces de usuario.
-- **Next.js**: Framework de React para aplicaciones web de lado del servidor.
-- **Firebase**: Plataforma para aplicaciones web y móviles que ofrece servicios de backend como autenticación, base de datos en tiempo real y almacenamiento.
-- **Redux**: Librería para la gestión del estado de la aplicación.
-- **Material-UI**: Librería de componentes de interfaz de usuario basados en Material Design para React.
+-   **React**: Biblioteca de JavaScript para construir interfaces de usuario.
+-   **Next.js**: Framework de React para aplicaciones web de lado del servidor.
+-   **Firebase**: Plataforma para aplicaciones web y móviles que ofrece servicios de backend como autenticación, base de datos en tiempo real y almacenamiento.
+-   **Redux**: Librería para la gestión del estado de la aplicación.
+-   **Material-UI**: Librería de componentes de interfaz de usuario basados en Material Design para React.
 
 ## Funcionalidades Principales
 
-- **Gestión de Tareas**: Añadir, editar, y eliminar tareas personales, profesionales y del hogar.
-- **Autenticación**: Sistema de autenticación de usuarios utilizando Firebase Auth.
-- **Recurrencia de Tareas**: Configuración de tareas recurrentes (diarias, semanales, mensuales).
-- **Vista Personalizada**: Visualización de tareas en vistas diarias, semanales y mensuales.
+-   **Gestión de Tareas**: Añadir, editar, y eliminar tareas personales, profesionales y del hogar.
+-   **Autenticación**: Sistema de autenticación de usuarios utilizando Firebase Auth.
+-   **Recurrencia de Tareas**: Configuración de tareas recurrentes (diarias, semanales, mensuales).
+-   **Vista Personalizada**: Visualización de tareas en vistas diarias, semanales y mensuales.
 
 ## Contribución
 
