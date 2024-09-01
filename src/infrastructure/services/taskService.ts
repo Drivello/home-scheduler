@@ -31,6 +31,7 @@ export class TaskService {
 
     async updateTask(task: Task): Promise<void> {
         if (!task || task.id.length === 0) throw new Error("[Task Service - UpdateTask]: Cannot update task without task / task id"); 
+        if (task.dueDate === undefined) delete task.dueDate;
         await this.taskRepository.update(task);
     }
 
