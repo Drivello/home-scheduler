@@ -1,6 +1,6 @@
 // src/components/tasks/TaskCard.tsx
 import React, { useState } from "react";
-import { Task, taskStatus } from "../../core/entities/task";
+import { Task, taskStatus, taskTypeEnum } from "../../core/entities/task";
 import {
     Card,
     CardContent,
@@ -18,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { TaskService } from "../../infrastructure/services/taskService";
 import { TaskRepository } from "../../infrastructure/repositories/taskRepository";
 import TaskForm from "./taskForm";
+import { homeService, userService } from "@/infrastructure/services/services";
 
 interface TaskCardProps {
     task: Task;
@@ -62,6 +63,19 @@ const TaskCard: React.FC<TaskCardProps> = ({
         if (confirmed) {
             try {
                 await taskService.deleteTask(task.id);
+                switch (task.taskType) {
+                    case taskTypeEnum.personal:
+                        await userService.deletePersonalTask(
+                            task.createdBy.id,
+                            task.id
+                        );
+                        break;
+                    case taskTypeEnum.professional:
+                        await userService.deleteProfessionalTask(task.createdBy.id, task.id)
+                        break;
+                    case taskTypeEnum.home:
+                        await homeService.deleteHomeTask(task.homeId!, task.id)
+                }
                 onTaskDeleted(task.id);
             } catch (error) {
                 console.error("Error deleting task:", error);
