@@ -21,14 +21,19 @@ import {
     Box,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import editTaskUseCase from "@/core/use-cases/editTaskUseCase";
 
 interface TaskFormProps {
     task: Task;
     submitMode: string;
+    onSuccess?: () => void;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ task, submitMode }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ task, submitMode, onSuccess }) => {
     const router = useRouter();
+    const buttonLabel = submitMode === "create" ? "Add Task" : "Update Task";
+    const loadingButtonLabel =
+        submitMode === "create" ? "Adding..." : "Updating...";
     const user = useSelector((state: RootState) => state.user.user);
     const [loading, setLoading] = useState(user === undefined);
     const [id, setId] = useState(task.id ?? "");
@@ -83,10 +88,12 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, submitMode }) => {
                     await addTaskUseCase.execute(newTask);
                     break;
                 case "update":
-                //await editTaskUseCase.execute(newTask);
+                    await editTaskUseCase.execute(newTask, user);
+                    break;
                 default:
-                    console.error("Not implemented");
+                    console.error(submitMode + "Not implemented");
             }
+            if (onSuccess) onSuccess();
         } catch (error) {
             console.error("Error adding task:", error);
         } finally {
@@ -184,7 +191,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, submitMode }) => {
                         color="primary"
                         disabled={loading}
                     >
-                        {loading ? "Adding..." : "Add Task"}
+                        {loading ? loadingButtonLabel : buttonLabel}
                     </Button>
                 </Grid>
             </Grid>

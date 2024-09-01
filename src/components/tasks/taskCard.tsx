@@ -141,7 +141,13 @@ const TaskCard: React.FC<TaskCardProps> = ({
                         p: 4,
                     }}
                 >
-                    <TaskForm task={task} submitMode="update" />
+                    <TaskForm
+                        task={task}
+                        submitMode="update"
+                        onSuccess={() => {
+                            handleCloseEditModal();
+                        }}
+                    />
                 </Box>
             </Modal>
         </Card>
